@@ -16,7 +16,12 @@
 				<tr th:each="student: ${students}">
 					<td><a th:href="@{'/students/' + ${student.id}}" th:text="${student.id}"></a></td>
 					<td th:text="${student.name}"></td>
-					<td></td>
+					<td>
+						<form method="POST" th:action="@{'/students/' + ${student.id}}">
+							<input type="hidden" name="_method" value="DELETE" />
+							<button type="submit" class="btn btn-danger">Удалить</button>
+						</form>
+					</td>
 				</tr>
 			</tbody>
 		</table>
