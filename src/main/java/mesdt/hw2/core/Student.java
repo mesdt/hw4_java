@@ -24,6 +24,10 @@ public class Student implements Serializable {
 	protected Student() {
 		//
 	}
+	
+	public Student(String name) {
+		this.name = name;
+	}
 
 	public Long getId() {
 		return id;
