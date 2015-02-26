@@ -1,19 +1,16 @@
 package mesdt.hw2.core;
 
 import java.io.Serializable;
-import java.util.Collection;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "students")
-public class Student implements Serializable {
+@Table(name = "subjects")
+public class Subject implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -24,15 +21,11 @@ public class Student implements Serializable {
 	@Column(nullable = false, unique = true)
 	private String name;
 
-	// N.B.
-	@OneToMany(mappedBy = "id.student", cascade = CascadeType.REMOVE)
-	private Collection<Score> scores;
-
-	protected Student() {
+	protected Subject() {
 		//
 	}
 
-	public Student(String name) {
+	public Subject(String name) {
 		this.name = name;
 	}
 
