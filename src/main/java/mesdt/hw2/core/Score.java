@@ -13,13 +13,26 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "scores")
-public class Score {
+public class Score implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@EmbeddedId
 	private Id id;
 
 	@Column(nullable = false)
 	private Integer score;
+
+	protected Score() {
+		//
+	}
+
+	public Score(Student student, Subject subject, Integer score) {
+		id = new Id();
+		id.student = student;
+		id.subject = subject;
+		this.score = score;
+	}
 
 	public Subject getSubject() {
 		return id.subject;
@@ -40,8 +53,8 @@ public class Score {
 
 		private static final long serialVersionUID = 1L;
 
-		@ManyToOne(optional = false)
 		// N.B.
+		@ManyToOne(optional = false)
 		@JoinColumn(foreignKey = @ForeignKey(foreignKeyDefinition = "FOREIGN KEY (student_id) REFERENCES students (id) ON DELETE CASCADE"))
 		private Student student;
 

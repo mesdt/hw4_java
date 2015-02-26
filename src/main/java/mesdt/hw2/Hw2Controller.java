@@ -45,4 +45,12 @@ public class Hw2Controller {
 		return "redirect:/";
 	}
 
+	@RequestMapping(method = RequestMethod.PUT, value = "/students/{id}/scores")
+	public String setScores(@PathVariable Long id, @RequestParam("subjectIds[]") Long[] subjectIds,
+			@RequestParam("scores[]") Integer[] scores) {
+		Student student = hw2.student(id);
+		hw2.setScores(student, subjectIds, scores);
+		return "redirect:/students/" + student.getId();
+	}
+
 }

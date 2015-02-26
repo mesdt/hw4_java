@@ -11,4 +11,6 @@ public interface ScoreRepository extends JpaRepository<Score, Score.Id> {
 
 	List<Score> findByIdStudent(Student student);
 
+	Long deleteByIdStudent(Student student);
+
 }
