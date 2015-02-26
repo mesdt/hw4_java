@@ -1,8 +1,9 @@
 package mesdt.hw2;
 
 import mesdt.hw2.core.Student;
-import mesdt.hw2.repo.StudentRepository;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,24 +16,32 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class Hw2Controller {
 
 	@Autowired
-	private StudentRepository students;
+	private Hw2Service hw2;
+
+	protected final Log log = LogFactory.getLog(getClass());
 
 	@RequestMapping(method = RequestMethod.GET, value = "/")
 	public String index(Model vars) {
-		vars.addAttribute("students", students.findAll());
+		vars.addAttribute("students", hw2.students());
 		return "students";
+	}
+
+	@RequestMapping(method = RequestMethod.GET, value = "/students/{id}")
+	public String student(@PathVariable Long id, Model vars) {
+		Student student = hw2.student(id);
+		vars.addAttribute("student", student).addAttribute("scores", hw2.scores(student));
+		return "student";
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/students")
 	public String createStudent(@RequestParam String name) {
-		Student student = new Student(name);
-		students.save(student);
-		return "redirect:/";
+		Student student = hw2.createStudent(name);
+		return "redirect:/students/" + student.getId();
 	}
 
 	@RequestMapping(method = RequestMethod.DELETE, value = "/students/{id}")
 	public String deleteStudent(@PathVariable Long id) {
-		students.delete(id);
+		hw2.deleteStudent(id);
 		return "redirect:/";
 	}
 

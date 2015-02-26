@@ -37,4 +37,9 @@ public class Subject implements Serializable {
 		return name;
 	}
 
+	@Override
+	public String toString() {
+		return String.format("(subject %d %s)", id, name);
+	}
+
 }

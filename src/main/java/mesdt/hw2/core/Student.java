@@ -44,4 +44,9 @@ public class Student implements Serializable {
 		return name;
 	}
 
+	@Override
+	public String toString() {
+		return String.format("(student %d %s)", id, name);
+	}
+
 }

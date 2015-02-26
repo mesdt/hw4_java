@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="BASE">
+<body>
+	<th:block layout:fragment="rows">
+		<h1 th:text="${student.name}"></h1>
+		<form method="POST" action="scores">
+			<input type="hidden" name="_method" value="PUT" />
+			<table class="table">
+				<caption>Оценки</caption>
+				<thead>
+					<tr>
+						<th>Предмет</th>
+						<th>Оценка</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="score: ${scores}">
+						<td th:text="${score.key.name}"></td>
+						<td><input type="number" min="1" max="100" class="form-control" th:value="${score.value}" /></td>
+					</tr>
+				</tbody>
+			</table>
+			<button type="submit" class="btn btn-primary">Сохранить</button>
+			<button type="button" class="btn btn-default" onclick="javascript:history.back()">Назад</button>
+		</form>
+	</th:block>
+</body>
+</html>

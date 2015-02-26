@@ -21,6 +21,19 @@ public class Score {
 	@Column(nullable = false)
 	private Integer score;
 
+	public Subject getSubject() {
+		return id.subject;
+	}
+
+	public Integer getScore() {
+		return score;
+	}
+
+	@Override
+	public String toString() {
+		return String.format("(score %s %d)", id, score);
+	}
+
 	@Embeddable
 	// TODO: override equals(), hashCode()
 	public static class Id implements Serializable {
@@ -34,6 +47,12 @@ public class Score {
 
 		@ManyToOne(optional = false)
 		private Subject subject;
+
+		@Override
+		public String toString() {
+			return String.format("%s %s", student, subject);
+		}
+
 	}
 
 }
