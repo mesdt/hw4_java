@@ -1,6 +1,7 @@
 package mesdt.hw2;
 
 import mesdt.hw2.core.Student;
+import mesdt.hw2.svc.Hw2Service;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

@@ -1,4 +1,4 @@
-package mesdt.hw2;
+package mesdt.hw2.svc;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -20,7 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class Hw2Service {
+public class Hw2ServiceImpl implements Hw2Service {
 
 	@Autowired
 	private StudentRepository studentz;
@@ -33,14 +33,17 @@ public class Hw2Service {
 
 	protected final Log log = LogFactory.getLog(getClass());
 
+	@Override
 	public Collection<Student> students() {
 		return studentz.findAll();
 	}
 
+	@Override
 	public Student student(Long id) {
 		return studentz.getOne(id);
 	}
 
+	@Override
 	public Map<Subject, Integer> scores(Student student) {
 		// XXX: ручной джоин!
 		Map<Subject, Integer> scores = new HashMap<>();
@@ -53,6 +56,7 @@ public class Hw2Service {
 		return scores;
 	}
 
+	@Override
 	@Transactional
 	public void setScores(Student student, Long[] subjectIds, Integer[] scores) {
 		scorez.deleteByIdStudent(student);
@@ -65,10 +69,12 @@ public class Hw2Service {
 		}
 	}
 
+	@Override
 	public Student createStudent(String name) {
 		return studentz.save(new Student(name));
 	}
 
+	@Override
 	public void deleteStudent(Long id) {
 		studentz.delete(id);
 	}
