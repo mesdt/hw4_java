@@ -19,5 +19,9 @@ public interface Hw2Service {
 	Student createStudent(String name);
 
 	void deleteStudent(Long id);
+        
+        void updateStudent(Long id, String name);
+        
+        public Map<String, Integer> scoresAsStr(Student student);
 
 }

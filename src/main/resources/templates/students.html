@@ -3,6 +3,8 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="BASE">
 <body>
 	<th:block layout:fragment="rows">
+            <div class="row">
+                <div class="col-md-8">
 		<table class="table">
 			<caption>Студенты</caption>
 			<thead>
@@ -13,18 +15,28 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each="student: ${students}">
+				<tr th:each="student: ${students}" >
 					<td><a th:href="@{'/students/' + ${student.id}}" th:text="${student.id}"></a></td>
-					<td th:text="${student.name}"></td>
+					<td th:text="${student.name}" th:id="@{'name_'+${student.id}}"></td>
 					<td>
 						<form method="POST" th:action="@{'/students/' + ${student.id}}">
 							<input type="hidden" name="_method" value="DELETE" />
 							<button type="submit" class="btn btn-danger">Удалить</button>
 						</form>
+                                                <button class="btn btn-default" 
+                                                        data-toggle="modal" 
+                                                        data-target="#myModal"
+                                                        th:attr="data-id=${student.id},data-name=${student.name}">Редактировать имя</button>
+                                                <button class="btn btn-default btn-grades" th:attr="data-id=${student.id}">Показать оценки</button>        
 					</td>
 				</tr>
 			</tbody>
 		</table>
+                </div>
+                <div class="col-md-4" id="grades">
+                    
+                </div>
+            </div>    
 		<form method="POST" action="/students" class="form-inline">
 			<fieldset>
 				<legend>Новый студент</legend>
@@ -34,6 +46,30 @@
 				<button type="submit" class="btn btn-primary">Создать</button>
 			</fieldset>
 		</form>
-	</th:block>
+
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      <h4 class="modal-title" id="myModalLabel">Редактирование имени студента</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div id="message"></div>
+                        <input type="hidden" id="id_input" name="id" value="" />
+                        <input type="text" id="name_input" name="name" value="" />
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+                      <button type="button" class="btn btn-primary" id="save_button">Сохранить</button>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            
+        </th:block>
+    
+
+        
 </body>
 </html>

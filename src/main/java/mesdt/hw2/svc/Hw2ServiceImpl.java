@@ -57,6 +57,19 @@ public class Hw2ServiceImpl implements Hw2Service {
 	}
 
 	@Override
+	public Map<String, Integer> scoresAsStr(Student student) {
+		// XXX: ручной джоин!
+		Map<String, Integer> scores = new HashMap<>();
+		for (Subject subject : subjectz.findAll()) {
+			scores.put(subject.getName(), null);
+		}
+		for (Score score : scorez.findByIdStudent(student)) {
+			scores.put(score.getSubject().getName(), score.getScore());
+		}
+		return scores;
+	}
+        
+	@Override
 	@Transactional
 	public void setScores(Student student, Long[] subjectIds, Integer[] scores) {
 		scorez.deleteByIdStudent(student);
@@ -78,5 +91,10 @@ public class Hw2ServiceImpl implements Hw2Service {
 	public void deleteStudent(Long id) {
 		studentz.delete(id);
 	}
-
+	@Override
+	public void updateStudent(Long id, String name) {
+		Student student = student(id);
+                student.setName(name);
+                studentz.save(student);
+	}
 }

@@ -6,12 +6,14 @@ import mesdt.hw2.svc.Hw2Service;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class Hw2Controller {
@@ -53,5 +55,18 @@ public class Hw2Controller {
 		hw2.setScores(student, subjectIds, scores);
 		return "redirect:/students/" + student.getId();
 	}
-
+        
+        @ResponseBody
+        @RequestMapping(method = RequestMethod.PUT, value = "/students/{id}")
+	public Object updateStudent(@PathVariable Long id, @RequestParam String name) {
+		hw2.updateStudent(id,name);
+		return "Запись успешно изменена";
+	}
+        
+        @ResponseBody
+        @RequestMapping(method = RequestMethod.GET, value = "/students/{id}/scores")
+	public Object gradesStudent(@PathVariable Long id) {
+		Student student = hw2.student(id);
+		return hw2.scoresAsStr(student);
+	}
 }
